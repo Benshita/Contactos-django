@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect 
 from .models import Contacto
 from .forms import ContactoForm
-
-from agenda.contactos import models # Importamos Q para poder hacer consultas las cuales la vamos a usar para hacer busquedas
+from django.db import models # Importar Q para consultas complejas
 
 def lista_contactos(request):
     query = request.GET.get('q', '')
