@@ -15,7 +15,7 @@ PAISES = [
 class Contacto(models.Model):
     nombre = models.CharField(max_length=100)
     pais = models.CharField(max_length=2, choices=PAISES, default='CL')
-    telefono = models.CharField(max_length=13)
+    telefono = models.CharField(max_length=15)
     correo = models.EmailField(max_length=100, unique=True)
     direccion = models.CharField(max_length=200)
 
