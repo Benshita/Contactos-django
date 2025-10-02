@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect 
 from .models import Contacto
 from .forms import ContactoForm
+from django.views.decorators.csrf import csrf_protect
 from django.db import models # Importar Q para consultas complejas
 
+@csrf_protect
 def lista_contactos(request):
     query = request.GET.get('q', '')
     if query:
@@ -13,10 +15,12 @@ def lista_contactos(request):
         contactos = Contacto.objects.all()
     return render(request, 'contactos/lista_contactos.html', {'contactos': contactos, 'query': query})
 
+@csrf_protect
 def detalle_contacto(request, id):
     contacto = get_object_or_404(Contacto, id=id)
     return render(request, 'contactos/detalle_contacto.html', {'contacto': contacto})
 
+@csrf_protect
 def nuevo_contacto(request):
     if request.method == 'POST':
         form = ContactoForm(request.POST)
@@ -27,6 +31,7 @@ def nuevo_contacto(request):
         form = ContactoForm()
     return render(request, 'contactos/nuevo_contacto.html', {'form': form})
 
+@csrf_protect
 def editar_contacto(request, id):
     contacto = get_object_or_404(Contacto, id=id)
     if request.method == 'POST':
@@ -38,6 +43,7 @@ def editar_contacto(request, id):
         form = ContactoForm(instance=contacto)
     return render(request, 'contactos/editar_contacto.html', {'form': form})
 
+@csrf_protect
 def eliminar_contacto(request, id):
     contacto = get_object_or_404(Contacto, id=id)
     if request.method == 'POST':
