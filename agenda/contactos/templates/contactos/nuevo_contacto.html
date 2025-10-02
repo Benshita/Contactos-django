@@ -1,0 +1,92 @@
+{% extends 'contactos/base.html' %}
+
+{% block title %}
+  Nuevo Contacto
+{% endblock %}
+
+{% block content %}
+  <div class="max-w-2xl mx-auto">
+    <form method="post" class="bg-white p-8 rounded-lg shadow-lg border border-gray-200">
+      {% csrf_token %}
+      <!-- Campo Nombre -->
+      <div class="mb-6">
+        <label for="{{ form.nombre.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">{{ form.nombre.label }}</label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+          <div class="mt-2 text-sm text-red-600">{{ form.nombre.errors }}</div>
+        {% endif %}
+      </div>
+      <!-- Campo País -->
+      <div class="mb-6">
+        <label for="{{ form.pais.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">{{ form.pais.label }}</label>
+        {{ form.pais }}
+        {% if form.pais.errors %}
+          <div class="mt-2 text-sm text-red-600">{{ form.pais.errors }}</div>
+        {% endif %}
+      </div>
+      <!-- Campo Teléfono -->
+      <div class="mb-6">
+        <label for="{{ form.telefono.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">{{ form.telefono.label }}</label>
+        {{ form.telefono }}
+        <span id="telefono-ejemplo" class="text-gray-400 text-sm block mt-1"></span>
+        {% if form.telefono.errors %}
+          <div class="mt-2 text-sm text-red-600">{{ form.telefono.errors }}</div>
+        {% endif %}
+      </div>
+      <!-- Campo Correo -->
+      <div class="mb-6">
+        <label for="{{ form.correo.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">{{ form.correo.label }}</label>
+        {{ form.correo }}
+        {% if form.correo.errors %}
+          <div class="mt-2 text-sm text-red-600">{{ form.correo.errors }}</div>
+        {% endif %}
+      </div>
+      <!-- Campo Dirección -->
+      <div class="mb-6">
+        <label for="{{ form.direccion.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">{{ form.direccion.label }}</label>
+        {{ form.direccion }}
+        {% if form.direccion.errors %}
+          <div class="mt-2 text-sm text-red-600">{{ form.direccion.errors }}</div>
+        {% endif %}
+      </div>
+      <!-- Botones -->
+      <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
+        <a href="{% url 'lista_contactos' %}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Cancelar</a>
+        <button type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Guardar Contacto</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- JS para cambiar el ejemplo de teléfono -->
+  <script>
+    const ejemplosTelefono = {
+      CL: '+56912345678',
+      AR: '+5491123456789',
+      PE: '+51912345678',
+      BR: '+559112345678',
+      US: '+11234567890',
+      MX: '+5215512345678',
+      CO: '+573001234567',
+      ES: '+34612345678'
+    }
+    
+    function actualizarEjemploTelefono() {
+      const paisSelect = document.getElementById('id_pais')
+      const telefonoInput = document.getElementById('id_telefono')
+      const ejemploSpan = document.getElementById('telefono-ejemplo')
+      if (paisSelect && telefonoInput && ejemploSpan) {
+        const pais = paisSelect.value
+        const ejemplo = ejemplosTelefono[pais] || ''
+        telefonoInput.placeholder = ejemplo
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      actualizarEjemploTelefono()
+      const paisSelect = document.getElementById('id_pais')
+      if (paisSelect) {
+        paisSelect.addEventListener('change', actualizarEjemploTelefono)
+      }
+    })
+  </script>
+{% endblock %}

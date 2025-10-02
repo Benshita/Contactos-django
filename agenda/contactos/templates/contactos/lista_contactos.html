@@ -1,0 +1,42 @@
+{% extends 'contactos/base.html' %}
+
+{% block title %}
+  Lista de Contactos
+{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-4">Lista de Contactos</h1>
+  <form method="get" class="mb-4 flex gap-2">
+    <input type="text" name="q" placeholder="Buscar por nombre o correo" value="{{ query }}" class="px-4 py-2 rounded border border-gray-300" />
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Buscar</button>
+    <a href="{% url 'nuevo_contacto' %}" class="bg-green-500 text-white px-4 py-2 rounded hover:scale-105 transition-all ease-in">Nuevo Contacto</a>
+  </form>
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">Nombre</th>
+        <th class="py-2 px-4 border-b">Teléfono</th>
+        <th class="py-2 px-4 border-b">Correo</th>
+        <th class="py-2 px-4 border-b">Dirección</th>
+        <th class="py-2 px-4 border-b">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contacto in contactos %}
+        <tr>
+          <td class="py-2 px-4 border-b">{{ contacto.nombre }}</td>
+          <td class="py-2 px-4 border-b">{{ contacto.telefono }}</td>
+          <td class="py-2 px-4 border-b">{{ contacto.correo }}</td>
+          <td class="py-2 px-4 border-b">{{ contacto.direccion }}</td>
+          <td class="py-2 px-4 border-b">
+            <menu class="flex flex-row gap-2 items-center text-white">
+              <a href="{% url 'detalle_contacto' contacto.id %}" class="bg-blue-500 hover:scale-105 transition-all ease-in px-2 py-1 rounded">Ver</a>
+              <a href="{% url 'editar_contacto' contacto.id %}" class="bg-yellow-500 hover:scale-105 transition-all ease-in px-2 py-1 rounded">Editar</a>
+              <a href="{% url 'eliminar_contacto' contacto.id %}" class="bg-red-500 hover:scale-105 transition-all ease-in px-2 py-1 rounded">Eliminar</a>
+            </menu>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
